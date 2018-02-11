@@ -13,7 +13,7 @@ class Person(models.Model):
     endDate = models.DateField(max_length=100)
     firstName = models.CharField(max_length=45)
     secondName = models.CharField(max_length=45)
-    patronymic = models.CharField(max_length=45)
+    patronymicName = models.CharField(max_length=45)
     birthDate = models.DateField(max_length=255)
     gender = models.CharField(max_length=20, choices=GENDER)
     taxCode = models.CharField(max_length=18)
