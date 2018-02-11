@@ -1,6 +1,6 @@
 from django.db import models
 
-from core.submodels import party_models
+from core.submodels.party_models import Party
 
 
 class Person(models.Model):
@@ -8,7 +8,7 @@ class Person(models.Model):
         ('Male', 'Male'),
         ('Female', 'Female')
     )
-    party = models.ForeignKey(party_models.Party, on_delete=models.CASCADE)
+    party = models.ForeignKey(Party, on_delete=models.CASCADE)
     startDate = models.DateField(max_length=100)
     endDate = models.DateField(max_length=100)
     firstName = models.CharField(max_length=45)
