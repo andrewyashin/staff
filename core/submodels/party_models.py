@@ -8,12 +8,6 @@ class ContactType(models.Model):
     infoText = models.CharField(max_length=255, blank=True, null=True)
 
 
-class PartyContact(models.Model):
-    contactType = models.ForeignKey(ContactType, on_delete=models.CASCADE)
-    contact = models.CharField(max_length=512)
-    infoText = models.CharField(max_length=255, blank=True, null=True)
-
-
 class PartyType(models.Model):
     name = models.CharField(max_length=45)
     caption = models.CharField(max_length=60)
@@ -27,8 +21,14 @@ class Party(models.Model):
         ('DEL', 'Deleted')
     )
     partyType = models.ForeignKey(PartyType, on_delete=models.CASCADE)
-    partyContact = models.ForeignKey(PartyContact, on_delete=models.CASCADE)
     state = models.CharField(max_length=5, choices=STATE_TYPE)
+    infoText = models.CharField(max_length=255, blank=True, null=True)
+
+
+class PartyContact(models.Model):
+    party = models.ForeignKey(Party, on_delete=models.CASCADE, blank=True, null=True)
+    contactType = models.ForeignKey(ContactType, on_delete=models.CASCADE)
+    contact = models.CharField(max_length=512)
     infoText = models.CharField(max_length=255, blank=True, null=True)
 
 
