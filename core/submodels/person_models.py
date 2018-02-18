@@ -35,4 +35,17 @@ class Passport(models.Model):
     issueDate = models.DateField
     expirationDate = models.DateField
     issueAuth = models.CharField(max_length=255)
-    passportCol = models.CharField(max_length=45)
+    infoText = models.CharField(max_length=255, null=True, blank=True)
+
+
+class PersonCategory(models.Model):
+    caption = models.CharField(max_length=128)
+    infoText = models.CharField(max_length=255, null=True, blank=True)
+
+
+class PersonHasPersonCategory(models.Model):
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    personCategory = models.ForeignKey(PersonCategory, on_delete=models.CASCADE)
+    startDate = models.DateField
+    endDate = models.DateField
+    infoText = models.CharField(max_length=255, null=True, blank=True)
