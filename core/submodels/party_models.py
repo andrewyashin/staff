@@ -6,7 +6,6 @@ class ContactType(models.Model):
     caption = models.CharField(max_length=128)
     template = models.CharField(max_length=64)
     infoText = models.CharField(max_length=255, blank=True, null=True)
-    owner = models.ForeignKey('auth.User', related_name='contactTypes', on_delete=models.CASCADE)
 
     def __str__(self):
         return "{}".format(self.name)
