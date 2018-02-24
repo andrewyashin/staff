@@ -1,3 +1,5 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +8,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Staff</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link href="css/footer-navbar.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer-navbar.css' %}">
 </head>
 <body>
 <header>
@@ -20,22 +22,27 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link organizations">Організації<span class="sr-only">(current)</span></a>
+                    <a class="nav-link organizations" href="/organizations">Організації</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link teachers" href="#">Викладачі</a>
+                <li class="nav-item active">
+                    <a class="nav-link teachers" href="/teachers">Викладачі</a>
                 </li>
             </ul>
         </div>
     </nav>
 </header>
 
-<main role="main" class="container">
-    <h1 class="mt-5">Sticky footer with fixed navbar</h1>
+<main role="main" class="container mainContainer">
+    <div id="mainContainer">
+    <h1 class="mt-5">{{ title }}</h1>
     <table>
-        <tr id="recordsTable">
-        </tr>
+        {% for teacher in teacher_list %}
+            <tr>
+                <td>{{ teacher.firstName }}</td>
+            </tr>
+        {% endfor %}
     </table>
+    </div>
 </main>
 
 <footer class="footer">
@@ -44,10 +51,8 @@
     </div>
 </footer>
 
-<script src="js/jquery-3.3.1.min.js"></script>
-<script>window.jQuery || document.write('<script src="js/jquery-slim.min.js"><\/script>')</script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/core.js"></script>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 </html>

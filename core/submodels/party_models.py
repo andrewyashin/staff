@@ -59,7 +59,7 @@ class PartyHasRole(models.Model):
 class Relationship(models.Model):
     caption = models.CharField(max_length=64)
     relationshipType = models.ForeignKey(RelationshipType, on_delete=models.CASCADE)
-    srcPartyHasRole = models.ForeignKey(PartyHasRole, on_delete=models.CASCADE, related_name="srcPartyHasRole")
-    destPartyHasRole = models.ForeignKey(PartyHasRole, on_delete=models.CASCADE, related_name="destPartyHasRole")
+    srcParty = models.ForeignKey(Party, on_delete=models.CASCADE, related_name="srcParty")
+    destParty = models.ForeignKey(Party, on_delete=models.CASCADE, related_name="destParty")
     startDate = models.DateField
     endDate = models.DateField

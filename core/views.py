@@ -1,17 +1,28 @@
-from rest_framework import generics
-from rest_framework import permissions
+from django.views.generic import TemplateView
 
-from .models import ContactType
-from .serializers import ContactTypeSerializer
-from .permissions import IsOwner
+from core.models import Organization, PersonCategory, PersonHasPersonCategory, Person
 
 
-# Create your views here.
-class CreateView(generics.ListCreateAPIView):
-    queryset = ContactType.objects.all()
-    serializer_class = ContactTypeSerializer
-    permission_classes = (
-        permissions.IsAuthenticated, IsOwner)
+class OrganizationList(TemplateView):
+    template_name = 'organizations.html'
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['org_list'] = Organization.objects.all()
+        return context
+
+
+class TeacherList(TemplateView):
+    template_name = 'teachers.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        teacherCategory = PersonCategory.objects.get(caption='Teacher')
+        teacherHasTeacherCategory = PersonHasPersonCategory.objects.filter(
+            personCategory=teacherCategory)
+        teachers = []
+        for teacherId in teacherHasTeacherCategory:
+            teachers.append(teacherId.person)
+
+        context['teacher_list'] = teachers
+        return context
