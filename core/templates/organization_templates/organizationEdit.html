@@ -21,10 +21,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+                <li class="nav-item active" >
                     <a class="nav-link organizations" href="/organizations">Організації</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item ">
                     <a class="nav-link teachers" href="/teachers">Викладачі</a>
                 </li>
             </ul>
@@ -34,14 +34,24 @@
 
 <main role="main" class="container mainContainer">
     <div id="mainContainer">
-    <h1 class="mt-5">{{ title }}</h1>
-    <table>
-        {% for teacher in teacher_list %}
-            <tr>
-                <td>{{ teacher.firstName }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+        <form class="form-group" style="margin-top: 10px" method="post" action="
+            /organization/save/{{ organization.id|default:'' }}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name" data-model-name="name">Назва:</label>
+                <input type="text" class="form-control" name="name" id="name"
+                       value="{{ organization.name }}"
+                required>
+            </div>
+
+            <div class="form-group">
+                <label for="infoText" data-model-name="infoText">Додаткова інформація:</label>
+                <input type="text" class="form-control" name="infoText" id="infoText"
+                       value="{{ organization.infoText|default:'' }}">
+            </div>
+
+            <input class="btn btn-info pull-right" style="margin: 20px" type="submit" value="Зберігти">
+        </form>
     </div>
 </main>
 
@@ -54,5 +64,6 @@
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
 <script src="{% static 'js/popper.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/datatables.min.js' %}"></script>
 </body>
 </html>
