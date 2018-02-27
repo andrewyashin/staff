@@ -19,10 +19,24 @@ class Person(models.Model):
     taxCode = models.CharField(max_length=18)
     infoText = models.CharField(max_length=255, blank=True, null=True)
 
+    def __str__(self):
+        return '{} {} {}'.format(self.firstName, self.secondName, self.patronymicName)
+
+    class Meta:
+        verbose_name = 'Person'
+        verbose_name_plural = 'Persons'
+
 
 class PassportType(models.Model):
     caption = models.CharField(max_length=45)
     infoText = models.CharField(max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        return '{}'.format(self.caption)
+
+    class Meta:
+        verbose_name = 'Passport Type'
+        verbose_name_plural = 'Passport Types'
 
 
 class Passport(models.Model):
@@ -37,10 +51,24 @@ class Passport(models.Model):
     issueAuth = models.CharField(max_length=255)
     infoText = models.CharField(max_length=255, null=True, blank=True)
 
+    def __str__(self):
+        return 'Passport: {} {} {}'.format(self.person.firstName, self.person.secondName, self.person.patronymicName)
+
+    class Meta:
+        verbose_name = 'Passport'
+        verbose_name_plural = 'Passports'
+
 
 class PersonCategory(models.Model):
     caption = models.CharField(max_length=128)
     infoText = models.CharField(max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        return '{}'.format(self.caption)
+
+    class Meta:
+        verbose_name = 'Person Category'
+        verbose_name_plural = 'Person Categories'
 
 
 class PersonHasPersonCategory(models.Model):
@@ -49,3 +77,10 @@ class PersonHasPersonCategory(models.Model):
     startDate = models.DateField
     endDate = models.DateField
     infoText = models.CharField(max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        return '{} - {}'.format(self.person.secondName, self.personCategory.caption)
+
+    class Meta:
+        verbose_name = 'Person Has Person Category'
+        verbose_name_plural = 'Person Has Person Category'

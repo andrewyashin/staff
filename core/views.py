@@ -1,2 +1,2 @@
 from core.subviews.organization_views import *
-from core.subviews.teacher_views import  *
+from core.subviews.worker_views import  *

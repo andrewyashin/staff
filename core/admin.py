@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from core.models import PartyType, OrganizationCategory, PassportType, DBAccess, ContactType, Party, PartyContact, \
+from core.models import PartyType, OrganizationCategory, PassportType, ContactType, Party, PartyContact, \
     Organization, OrganizationHasOrganizationCategory, Person, PersonCategory, PersonHasPersonCategory, Passport, Role, \
     PartyHasRole, Relationship, RelationshipType
 
@@ -69,10 +69,6 @@ class PassportTypeAdmin(admin.ModelAdmin):
     model = PassportType
 
 
-class DBAccessAdmin(admin.ModelAdmin):
-    model = DBAccess
-
-
 admin.site.register(Party, PartyAdmin)
 admin.site.register(PartyContact, PartyContactAdmin)
 admin.site.register(ContactType, ContactTypeAdmin)
@@ -89,4 +85,3 @@ admin.site.register(PersonCategory, PersonCategoryAdmin)
 admin.site.register(PersonHasPersonCategory, PersonHasPersonCategoryAdmin)
 admin.site.register(Passport, PassportAdmin)
 admin.site.register(PassportType, PassportTypeAdmin)
-admin.site.register(DBAccess, DBAccessAdmin)
