@@ -3,7 +3,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from core.subviews.organization_views import OrganizationList, EditOrganization, DeleteOrganization, SaveOrganization, \
     CreateOrganization
-from core.subviews.teacher_views import EditTeacher, DeleteTeacher, SaveTeacher, CreateTeacher, TeacherList
+from core.subviews.worker_views import EditWorker, DeleteWorker, SaveWorker, CreateWorker, WorkerList
 
 urlpatterns = {
     path('', OrganizationList.as_view(), name='Organizations'),
@@ -15,12 +15,12 @@ urlpatterns = {
     path('organization/add', CreateOrganization.as_view(), name='CreateOrganization'),
     path('organizations/', OrganizationList.as_view(), name='Organizations'),
 
-    path('teacher/edit/<int:id>', EditTeacher.as_view(), name='EditTeacher'),
-    path('teacher/delete/<int:id>', DeleteTeacher.as_view(), name='EditTeacher'),
-    path('teacher/save/<int:id>', SaveTeacher.as_view(), name='SaveTeacher'),
-    path('teacher/save/', SaveTeacher.as_view(), name='SaveTeacher'),
-    path('teacher/add', CreateTeacher.as_view(), name='UpdateTeacher'),
-    path('teachers/', TeacherList.as_view(), name='Teachers'),
+    path('worker/edit/<int:id>', EditWorker.as_view(), name='EditWorker'),
+    path('worker/delete/<int:id>', DeleteWorker.as_view(), name='EditWorker'),
+    path('worker/save/<int:id>', SaveWorker.as_view(), name='SaveWorker'),
+    path('worker/save/', SaveWorker.as_view(), name='SaveWorker'),
+    path('worker/add', CreateWorker.as_view(), name='UpdateWorker'),
+    path('workers/', WorkerList.as_view(), name='Workers'),
 }
 
 urlpatterns = format_suffix_patterns(urlpatterns)

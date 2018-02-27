@@ -10,11 +10,22 @@ class ContactType(models.Model):
     def __str__(self):
         return "{}".format(self.name)
 
+    class Meta:
+        verbose_name = 'Contact Type'
+        verbose_name_plural = 'Contact Types'
+
 
 class PartyType(models.Model):
     name = models.CharField(max_length=45)
     caption = models.CharField(max_length=60)
     infoText = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return "{}, {}".format(self.name, self.caption)
+
+    class Meta:
+        verbose_name = 'Party Type'
+        verbose_name_plural = 'Party Types'
 
 
 class Party(models.Model):
@@ -27,12 +38,26 @@ class Party(models.Model):
     state = models.CharField(max_length=5, choices=STATE_TYPE)
     infoText = models.CharField(max_length=255, blank=True, null=True)
 
+    def __str__(self):
+        return '{}: {}, {}'.format(self.id, self.partyType.name, self.state)
+
+    class Meta:
+        verbose_name = 'Party'
+        verbose_name_plural = 'Parties'
+
 
 class PartyContact(models.Model):
     party = models.ForeignKey(Party, on_delete=models.CASCADE, blank=True, null=True)
     contactType = models.ForeignKey(ContactType, on_delete=models.CASCADE)
     contact = models.CharField(max_length=512)
     infoText = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return '{}'.format(self.contact)
+
+    class Meta:
+        verbose_name = 'Party Contact'
+        verbose_name_plural = 'Party Contacts'
 
 
 class RelationshipType(models.Model):
@@ -41,11 +66,25 @@ class RelationshipType(models.Model):
     dstDef = models.CharField(max_length=45)
     infoText = models.CharField(max_length=255, blank=True, null=True)
 
+    def __str__(self):
+        return '{}'.format(self.caption)
+
+    class Meta:
+        verbose_name = 'Relationship Type'
+        verbose_name_plural = 'Relationship Types'
+
 
 class Role(models.Model):
     caption = models.CharField(max_length=128)
     roleFlag = models.CharField(max_length=8)
     infoText = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return '{}'.format(self.caption)
+
+    class Meta:
+        verbose_name = 'Role'
+        verbose_name_plural = 'Roles'
 
 
 class PartyHasRole(models.Model):
@@ -55,6 +94,13 @@ class PartyHasRole(models.Model):
     endDate = models.DateField
     infoText = models.CharField(max_length=255, blank=True, null=True)
 
+    def __str__(self):
+        return '{} - {}'.format(self.party.id, self.role.caption)
+
+    class Meta:
+        verbose_name = 'Party Has Role'
+        verbose_name_plural = 'Party Has Role'
+
 
 class Relationship(models.Model):
     caption = models.CharField(max_length=64)
@@ -63,3 +109,10 @@ class Relationship(models.Model):
     destParty = models.ForeignKey(Party, on_delete=models.CASCADE, related_name="destParty")
     startDate = models.DateField
     endDate = models.DateField
+
+    def __str__(self):
+        return '{}'.format(self.caption)
+
+    class Meta:
+        verbose_name = 'Relationship'
+        verbose_name_plural = 'Relationships'
