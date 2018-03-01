@@ -16,7 +16,6 @@ class Person(models.Model):
     patronymicName = models.CharField(max_length=45)
     birthDate = models.DateField(max_length=255)
     gender = models.CharField(max_length=20, choices=GENDER)
-    taxCode = models.CharField(max_length=18)
     infoText = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
@@ -42,12 +41,12 @@ class PassportType(models.Model):
 class Passport(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     passportType = models.ForeignKey(PassportType, on_delete=models.CASCADE)
-    startDate = models.DateField
-    endDate = models.DateField
+    startDate = models.DateField(max_length=255)
+    endDate = models.DateField(max_length=255)
     serialNumber = models.CharField(max_length=16)
     name = models.CharField(max_length=128)
-    issueDate = models.DateField
-    expirationDate = models.DateField
+    issueDate = models.DateField(max_length=255)
+    expirationDate = models.DateField(max_length=255)
     issueAuth = models.CharField(max_length=255)
     infoText = models.CharField(max_length=255, null=True, blank=True)
 
@@ -74,8 +73,8 @@ class PersonCategory(models.Model):
 class PersonHasPersonCategory(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     personCategory = models.ForeignKey(PersonCategory, on_delete=models.CASCADE)
-    startDate = models.DateField
-    endDate = models.DateField
+    startDate = models.DateField(max_length=255)
+    endDate = models.DateField(max_length=255)
     infoText = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):

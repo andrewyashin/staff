@@ -17,8 +17,8 @@ class OrganizationCategory(models.Model):
 
 class Organization(models.Model):
     party = models.ForeignKey(Party, on_delete=models.CASCADE)
-    startDate = models.DateField
-    endDate = models.DateField
+    startDate = models.DateField(max_length=255)
+    endDate = models.DateField(max_length=255)
     name = models.CharField(max_length=255)
     infoText = models.CharField(max_length=255, blank=True, null=True)
 
@@ -33,8 +33,8 @@ class Organization(models.Model):
 class OrganizationHasOrganizationCategory(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     organizationCategory = models.ForeignKey(OrganizationCategory, on_delete=models.CASCADE)
-    startDate = models.DateField
-    endDate = models.DateField
+    startDate = models.DateField(max_length=255)
+    endDate = models.DateField(max_length=255)
 
     def __str__(self):
         return '{} - {}'.format(self.organization.name, self.organizationCategory.caption)

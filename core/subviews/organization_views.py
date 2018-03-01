@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 
 from core.models import Organization, OrganizationCategory, OrganizationHasOrganizationCategory, Party, PartyType
 
-category_caption = 'Кафедра'
+organization_category_caption = 'Кафедра'
 party_type = 'ORGANIZATION'
 
 
@@ -13,7 +13,7 @@ class OrganizationList(TemplateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['organization_list'] = load_organization()
+        context['organization_list'] = load_organization(organization_category_caption)
         return context
 
 
@@ -34,7 +34,7 @@ class DeleteOrganization(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         delete_organization(kwargs['id'])
-        context['organization_list'] = load_organization()
+        context['organization_list'] = load_organization(organization_category_caption)
         return context
 
 
@@ -47,7 +47,7 @@ class SaveOrganization(TemplateView):
             save_organization(request.POST)
         else:
             update_organization(kwargs['id'], request.POST)
-        context['organization_list'] = load_organization()
+        context['organization_list'] = load_organization(organization_category_caption)
         return HttpResponseRedirect('/organizations')
 
 
@@ -55,8 +55,8 @@ class CreateOrganization(TemplateView):
     template_name = 'organization_templates/organizationEdit.html'
 
 
-def load_organization():
-    organization_category = OrganizationCategory.objects.get(caption=category_caption)
+def load_organization(caption):
+    organization_category = OrganizationCategory.objects.get(caption=caption)
     organization_has_organization_category = OrganizationHasOrganizationCategory.objects.filter(
         organizationCategory=organization_category)
     organizations = []
@@ -84,7 +84,7 @@ def create_party():
 def create_organization(data, party):
     organization = Organization()
     organization.party = party
-    organization.startDate = datetime.now
+    organization.startDate = date.today()
     organization.endDate = date.max
     organization.name = data.get('name')
     organization.infoText = data.get('infoText')
@@ -93,7 +93,7 @@ def create_organization(data, party):
 
 
 def get_organization_category():
-    organization_category = OrganizationCategory.objects.get(caption=category_caption)
+    organization_category = OrganizationCategory.objects.get(caption=organization_category_caption)
     return organization_category
 
 

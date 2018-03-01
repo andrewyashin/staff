@@ -3,7 +3,8 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from core.subviews.organization_views import OrganizationList, EditOrganization, DeleteOrganization, SaveOrganization, \
     CreateOrganization
-from core.subviews.worker_views import EditWorker, DeleteWorker, SaveWorker, CreateWorker, WorkerList
+from core.subviews.worker_views import EditWorker, DeleteWorker, SaveWorker, CreateWorker, WorkerList, \
+    DeleteRelationshipView, SaveRelationshipView
 
 urlpatterns = {
     path('', OrganizationList.as_view(), name='Organizations'),
@@ -16,6 +17,8 @@ urlpatterns = {
     path('organizations/', OrganizationList.as_view(), name='Organizations'),
 
     path('worker/edit/<int:id>', EditWorker.as_view(), name='EditWorker'),
+    path('worker/relationship/delete/<int:id>', DeleteRelationshipView.as_view(), name='DeleteRelationshipView'),
+    path('worker/relationship/save/<int:id>', SaveRelationshipView.as_view(), name='SaveRelationshipView'),
     path('worker/delete/<int:id>', DeleteWorker.as_view(), name='EditWorker'),
     path('worker/save/<int:id>', SaveWorker.as_view(), name='SaveWorker'),
     path('worker/save/', SaveWorker.as_view(), name='SaveWorker'),

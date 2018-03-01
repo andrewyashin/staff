@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db import models
 
 
@@ -90,8 +92,8 @@ class Role(models.Model):
 class PartyHasRole(models.Model):
     party = models.ForeignKey(Party, on_delete=models.CASCADE)
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
-    startDate = models.DateField
-    endDate = models.DateField
+    startDate = models.DateField(max_length=255)
+    endDate = models.DateField(max_length=255)
     infoText = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
@@ -107,8 +109,8 @@ class Relationship(models.Model):
     relationshipType = models.ForeignKey(RelationshipType, on_delete=models.CASCADE)
     srcParty = models.ForeignKey(Party, on_delete=models.CASCADE, related_name="srcParty")
     destParty = models.ForeignKey(Party, on_delete=models.CASCADE, related_name="destParty")
-    startDate = models.DateField
-    endDate = models.DateField
+    startDate = models.DateField(max_length=255)
+    endDate = models.DateField(max_length=255)
 
     def __str__(self):
         return '{}'.format(self.caption)
@@ -116,3 +118,7 @@ class Relationship(models.Model):
     class Meta:
         verbose_name = 'Relationship'
         verbose_name_plural = 'Relationships'
+
+    @property
+    def is_max(self):
+        return self.endDate == date.max
