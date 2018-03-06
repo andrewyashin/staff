@@ -10,6 +10,7 @@
     <title>Співробітники</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer-navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/core.css' %}">
 </head>
 <body>
 <header>
@@ -21,7 +22,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active" >
+                <li class="nav-item active">
                     <a class="nav-link organizations" href="/organizations">Організації</a>
                 </li>
                 <li class="nav-item ">
@@ -34,24 +35,78 @@
 
 <main role="main" class="container mainContainer">
     <div id="mainContainer">
-        <form class="form-group" style="margin-top: 10px" method="post" action="
+        <div class="card margin_card" style="margin-bottom: 0">
+            <div class="card-header">
+                <h3 class="card-title">Детальна інформація</h3>
+            </div>
+
+            <div class="card-block">
+                <form class="form-group margin_form" style="margin-top: 10px" method="post" action="
             /organization/save/{{ organization.id|default:'' }}">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="name" data-model-name="name">Назва:</label>
-                <input type="text" class="form-control" name="name" id="name"
-                       value="{{ organization.name }}"
-                required>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name" data-model-name="name">Назва:</label>
+                        <input type="text" class="form-control" name="name" id="name"
+                               value="{{ organization.name }}"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="infoText" data-model-name="infoText">Додаткова інформація:</label>
+                        <input type="text" class="form-control" name="infoText" id="infoText"
+                               value="{{ organization.infoText|default:'' }}">
+                    </div>
+
+                    <input class="btn btn-info pull-right button_submit" type="submit" value="Зберігти">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="card margin_card">
+            <div class="card-header">
+                <h3 class="card-title">Співробітники</h3>
             </div>
 
-            <div class="form-group">
-                <label for="infoText" data-model-name="infoText">Додаткова інформація:</label>
-                <input type="text" class="form-control" name="infoText" id="infoText"
-                       value="{{ organization.infoText|default:'' }}">
+            <div class="card-block">
+                <div class="row">
+            <div class="col">
+                <table id="data" class="table table-sm table-striped">
+                    <thead>
+                    <tr align="center">
+                        <th rowspan="2">Прізвище</th>
+                        <th rowspan="2">Ім'я</th>
+                        <th rowspan="2">По батькові</th>
+                        <th rowspan="2">Дата народження</th>
+                        <th rowspan="2"></th>
+                        <th rowspan="2"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for worker in worker_list %}
+                        <tr align="center">
+                            <td>{{ worker.secondName }}</td>
+                            <td>{{ worker.firstName }}</td>
+                            <td>{{ worker.patronymicName }}</td>
+                            <td>{{ worker.birthDate|date:"Y-m-d" }}</td>
+                            <td><a target="_self"
+                                   class="btn btn-info pull-right"
+                                   href="/worker/edit/{{ worker.id }}">
+                                Детально
+                            </a></td>
+                            <td><a target="_self"
+                                   class="btn btn-info pull-right"
+                                   href="/worker/delete/{{ worker.id }}">
+                                Видалити
+                            </a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
-
-            <input class="btn btn-info pull-right" style="margin: 20px" type="submit" value="Зберігти">
-        </form>
+        </div>
+            </div>
+        </div>
     </div>
 </main>
 

@@ -1,8 +1,8 @@
 from django.contrib import admin
 
 from core.models import PartyType, OrganizationCategory, PassportType, ContactType, Party, PartyContact, \
-    Organization, OrganizationHasOrganizationCategory, Person, PersonCategory, PersonHasPersonCategory, Passport, Role, \
-    PartyHasRole, Relationship, RelationshipType
+    Organization, OrganizationHasOrganizationCategory, Person, PersonCategory, PersonHasPersonCategory, Passport,  \
+    Relationship, RelationshipType
 
 
 class PartyAdmin(admin.ModelAdmin):
@@ -19,14 +19,6 @@ class ContactTypeAdmin(admin.ModelAdmin):
 
 class PartyTypeAdmin(admin.ModelAdmin):
     model = PartyType
-
-
-class RoleAdmin(admin.ModelAdmin):
-    model = Role
-
-
-class PartyHasRoleAdmin(admin.ModelAdmin):
-    model = PartyHasRole
 
 
 class RelationshipAdmin(admin.ModelAdmin):
@@ -73,8 +65,6 @@ admin.site.register(Party, PartyAdmin)
 admin.site.register(PartyContact, PartyContactAdmin)
 admin.site.register(ContactType, ContactTypeAdmin)
 admin.site.register(PartyType, PartyTypeAdmin)
-admin.site.register(Role, RoleAdmin)
-admin.site.register(PartyHasRole, PartyHasRoleAdmin)
 admin.site.register(Relationship, RelationshipAdmin)
 admin.site.register(RelationshipType, RelationshipTypeAdmin)
 admin.site.register(Organization, OrganizationAdmin)

@@ -10,6 +10,7 @@
     <title>Співробітники</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer-navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/core.css' %}">
 </head>
 <body>
 <header>
@@ -33,49 +34,49 @@
 </header>
 
 <main role="main" class="container mainContainer">
-    <div id="mainContainer">
+    <div id="mainContainer" class="margin_card">
         <a target="_self"
            class="btn btn-info pull-right"
            href="/worker/add"
-            style="margin: 15px">Створити нового співробітника
+           style="margin: 15px">Створити нового співробітника
         </a>
 
-            <div class="row">
-                <div class="col">
-                    <table id="data" class="table table-sm table-striped">
-                        <thead>
+        <div class="row">
+            <div class="col">
+                <table id="data" class="table table-sm table-striped">
+                    <thead>
+                    <tr align="center">
+                        <th rowspan="2">Прізвище</th>
+                        <th rowspan="2">Ім'я</th>
+                        <th rowspan="2">По батькові</th>
+                        <th rowspan="2">Дата народження</th>
+                        <th rowspan="2"></th>
+                        <th rowspan="2"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for worker in worker_list %}
                         <tr align="center">
-                            <th rowspan="2">Прізвище</th>
-                            <th rowspan="2">Ім'я</th>
-                            <th rowspan="2">По батькові</th>
-                            <th rowspan="2">Дата народження</th>
-                            <th rowspan="2"></th>
-                            <th rowspan="2"></th>
+                            <td>{{ worker.secondName }}</td>
+                            <td>{{ worker.firstName }}</td>
+                            <td>{{ worker.patronymicName }}</td>
+                            <td>{{ worker.birthDate|date:"Y-m-d" }}</td>
+                            <td><a target="_self"
+                                   class="btn btn-info pull-right"
+                                   href="/worker/edit/{{ worker.id }}">
+                                Детально
+                            </a></td>
+                            <td><a target="_self"
+                                   class="btn btn-info pull-right"
+                                   href="/worker/delete/{{ worker.id }}">
+                                Видалити
+                            </a></td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {% for worker in worker_list %}
-                            <tr align="center">
-                                <td>{{ worker.secondName }}</td>
-                                <td>{{ worker.firstName }}</td>
-                                <td>{{ worker.patronymicName }}</td>
-                                <td>{{ worker.birthDate|date:"Y-m-d" }}</td>
-                                <td><a target="_self"
-                                       class="btn btn-info pull-right"
-                                       href="/worker/edit/{{ worker.id }}">
-                                    Детально
-                                </a></td>
-                                <td><a target="_self"
-                                       class="btn btn-info pull-right"
-                                       href="/worker/delete/{{ worker.id }}">
-                                    Видалити
-                                </a></td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
+        </div>
     </div>
 </main>
 

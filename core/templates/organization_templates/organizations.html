@@ -10,6 +10,7 @@
     <title>Співробітники</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer-navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/core.css' %}">
 </head>
 <body>
 <header>
@@ -33,44 +34,44 @@
 </header>
 
 <main role="main" class="container mainContainer">
-    <div id="mainContainer">
+    <div id="mainContainer" class="margin_card">
         <a target="_self"
            class="btn btn-info pull-right"
            href="/organization/add"
-            style="margin: 15px">Створити нову організацію
+           style="margin: 15px">Створити нову організацію
         </a>
-    <div class="row">
-                <div class="col">
-                    <table id="datat" class="table table-sm table-striped">
-                        <thead>
+        <div class="row">
+            <div class="col">
+                <table id="datat" class="table table-sm table-striped">
+                    <thead>
+                    <tr align="center">
+                        <th rowspan="2">Назва</th>
+                        <th rowspan="2">Додаткова інформація</th>
+                        <th rowspan="2"></th>
+                        <th rowspan="2"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for organization in organization_list %}
                         <tr align="center">
-                            <th rowspan="2">Назва</th>
-                            <th rowspan="2">Додаткова інформація</th>
-                            <th rowspan="2"></th>
-                            <th rowspan="2"></th>
+                            <td>{{ organization.name }}</td>
+                            <td>{{ organization.infoText }}</td>
+                            <td><a target="_self"
+                                   class="btn btn-info pull-right"
+                                   href="/organization/edit/{{ organization.id }}">
+                                Детально
+                            </a></td>
+                            <td><a target="_self"
+                                   class="btn btn-info pull-right"
+                                   href="/organization/delete/{{ organization.id }}">
+                                Видалити
+                            </a></td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {% for organization in organization_list %}
-                            <tr align="center">
-                                <td>{{ organization.name }}</td>
-                                <td>{{ organization.infoText }}</td>
-                                <td><a target="_self"
-                                       class="btn btn-info pull-right"
-                                       href="/organization/edit/{{ organization.id }}">
-                                    Детально
-                                </a></td>
-                                <td><a target="_self"
-                                       class="btn btn-info pull-right"
-                                       href="/organization/delete/{{ organization.id }}">
-                                    Видалити
-                                </a></td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
+        </div>
 
     </div>
 </main>
