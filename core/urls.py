@@ -8,13 +8,14 @@ from core.subviews.worker_views import EditWorker, DeleteWorker, SaveWorker, Cre
 
 urlpatterns = {
     path('', OrganizationList.as_view(), name='Organizations'),
-    path('organization/edit/<int:id>', EditOrganization.as_view(), name='EditOrganization'),
 
+    path('organization/edit/<int:id>', EditOrganization.as_view(), name='EditOrganization'),
     path('organization/delete/<int:id>', DeleteOrganization.as_view(), name='DeleteOrganization'),
     path('organization/save/<int:id>', SaveOrganization.as_view(), name='SaveOrganization'),
     path('organization/save/', SaveOrganization.as_view(), name='SaveOrganization'),
     path('organization/add', CreateOrganization.as_view(), name='CreateOrganization'),
     path('organizations/', OrganizationList.as_view(), name='Organizations'),
+    path('organizations/search/', OrganizationList.as_view(), name='OrganizationsSearch'),
 
     path('worker/contact-info/save/<int:id>', SaveContactInfoView.as_view(), name='SaveContactInfoView'),
     path('worker/contact-type/save/<int:id>', SaveContactTypeView.as_view(), name='SaveContactTypeView'),
@@ -29,6 +30,8 @@ urlpatterns = {
     path('worker/save/', SaveWorker.as_view(), name='SaveWorker'),
     path('worker/add', CreateWorker.as_view(), name='UpdateWorker'),
     path('workers/', WorkerList.as_view(), name='Workers'),
+    path('workers/search', WorkerList.as_view(), name='WorkersSearch'),
+
 }
 
 urlpatterns = format_suffix_patterns(urlpatterns)

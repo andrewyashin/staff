@@ -14,21 +14,23 @@ def load_organization(caption):
         organizationCategory=organization_category)
     organizations = []
     for organization_id in organization_has_organization_category:
-        if organization_id.organization.party.state == 'ACT':
-            organizations.append(organization_id.organization)
+        organizations.append(organization_id.organization)
     return organizations
 
 
 def load_person_organizations(organization_list, person):
     party_person = person.party
     relationships = Relationship.objects.filter(destParty=party_person)
-    person_organizations = []
+    organization_relationship = []
     for relationship in relationships:
         for organization in organization_list:
             if relationship.srcParty == organization.party:
-                person_organizations.append(relationship)
+                relationship_organization = RelationshipOrganization()
+                relationship_organization.relationship = relationship
+                relationship_organization.organization = organization
+                organization_relationship.append(relationship_organization)
 
-    return person_organizations
+    return organization_relationship
 
 
 def load_workers():
@@ -40,6 +42,16 @@ def load_workers():
         if worker_id.person.party.state == 'ACT':
             workers.append(worker_id.person)
     return workers
+
+
+def load_workers_per_search_text(search_text):
+    workers = load_workers()
+    search_text_workers = []
+    for worker in workers:
+        if str(search_text).lower() in str(worker.firstName).lower() or str(search_text).lower() in str(
+                worker.secondName).lower() or str(search_text).lower() in str(worker.patronymicName).lower():
+            search_text_workers.append(worker)
+    return search_text_workers
 
 
 def save_worker(data):
@@ -172,3 +184,8 @@ def delete_contact(contact_id):
     party = PartyContact.objects.get(pk=contact_id).party
     PartyContact.objects.get(pk=contact_id).delete()
     return Person.objects.get(party=party)
+
+
+class RelationshipOrganization:
+    organization = Organization()
+    relationship = Relationship()

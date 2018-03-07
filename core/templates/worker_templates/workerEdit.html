@@ -30,6 +30,10 @@
                 </li>
             </ul>
         </div>
+        <form class="form-inline my-2 my-lg-0" action="/workers/search">
+            <input class="form-control mr-sm-2" type="text" name="searchText" placeholder="Пошук">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Пошук</button>
+        </form>
     </nav>
 </header>
 
@@ -197,6 +201,7 @@
                             <table id="datat" class="table table-sm table-striped">
                                 <thead>
                                 <tr align="center">
+                                    <th rowspan="2">Організація</th>
                                     <th rowspan="2">Посада</th>
                                     <th rowspan="2">Дата початку</th>
                                     <th rowspan="2">Дата кінця</th>
@@ -204,19 +209,20 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for relationship in person_organization_list %}
+                                {% for item in organization_relationship %}
                                     <tr align="center">
-                                        <td>{{ relationship.caption }}</td>
-                                        <td>{{ relationship.startDate|date:"Y-m-d" }}</td>
-                                        {% if relationship.is_max %}
+                                        <td>{{ item.organization.name }}</td>
+                                        <td>{{ item.relationship.caption }}</td>
+                                        <td>{{ item.relationship.startDate|date:"Y-m-d" }}</td>
+                                        {% if item.relationship.is_max %}
                                             <td>----</td>
                                             <td><a target="_self"
                                                    class="btn btn-info pull-right"
-                                                   href="/worker/relationship/delete/{{ relationship.id }}">
+                                                   href="/worker/relationship/delete/{{ item.relationship.id }}">
                                                 Деактивувати
                                             </a></td>
                                         {% else %}
-                                            <td>{{ relationship.endDate|date:"Y-m-d" }}</td>
+                                            <td>{{ item.relationship.endDate|date:"Y-m-d" }}</td>
                                             <td></td>
                                         {% endif %}
                                     </tr>

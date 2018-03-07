@@ -18,6 +18,18 @@ def load_organization(caption):
     return organizations
 
 
+def load_organization_by_search_text(search_text, caption):
+    organization_category = OrganizationCategory.objects.get(caption=caption)
+    organization_has_organization_category = OrganizationHasOrganizationCategory.objects.filter(
+        organizationCategory=organization_category)
+    organizations = []
+    for organization_id in organization_has_organization_category:
+        if organization_id.organization.party.state == 'ACT':
+            if str(search_text).lower() in organization_id.organization.name.lower():
+                organizations.append(organization_id.organization)
+    return organizations
+
+
 def save_organization(data):
     party = create_party()
     organization = create_organization(data, party)
@@ -72,6 +84,8 @@ def delete_organization(pk):
     party.state = 'DEL'
     organization.endDate = datetime.now()
     party.save()
+
+    Relationship.objects.filter(srcParty=party).update(endDate=datetime.now())
 
 
 def load_workers_per_organization(organization):

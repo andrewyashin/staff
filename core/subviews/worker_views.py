@@ -13,7 +13,10 @@ class WorkerList(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['worker_list'] = load_workers()
+        if self.request.GET.get('searchText') is not None:
+            context['worker_list'] = load_workers_per_search_text(self.request.GET.get('searchText'))
+        else:
+            context['worker_list'] = load_workers()
         return context
 
 
@@ -26,7 +29,7 @@ class EditWorker(TemplateView):
         person = Person.objects.get(id=pk)
         context['person'] = person
         context['organization_list'] = load_organization(organization_category)
-        context['person_organization_list'] = load_person_organizations(load_organization(organization_category),
+        context['organization_relationship'] = load_person_organizations(load_organization(organization_category),
                                                                         person)
         context['contacts'] = load_contact_information(person)
         context['contact_types'] = load_contact_types()

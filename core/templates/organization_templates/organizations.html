@@ -30,48 +30,57 @@
                 </li>
             </ul>
         </div>
+        <form class="form-inline my-2 my-lg-0" method="get" action="/organizations/search">
+            <input class="form-control mr-sm-2" type="text" name="searchText" placeholder="Пошук">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Пошук</button>
+        </form>
     </nav>
 </header>
 
 <main role="main" class="container mainContainer">
-    <div id="mainContainer" class="margin_card">
+    <div id="mainContainer" class="margin_card text-center">
         <a target="_self"
-           class="btn btn-info pull-right"
+           class="btn btn-info pull-right text-center"
            href="/organization/add"
            style="margin: 15px">Створити нову організацію
         </a>
-        <div class="row">
-            <div class="col">
-                <table id="datat" class="table table-sm table-striped">
-                    <thead>
-                    <tr align="center">
-                        <th rowspan="2">Назва</th>
-                        <th rowspan="2">Додаткова інформація</th>
-                        <th rowspan="2"></th>
-                        <th rowspan="2"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for organization in organization_list %}
+        {% if organization_list %}
+
+            <div class="row">
+                <div class="col">
+                    <table id="datat" class="table table-sm table-striped">
+                        <thead>
                         <tr align="center">
-                            <td>{{ organization.name }}</td>
-                            <td>{{ organization.infoText }}</td>
-                            <td><a target="_self"
-                                   class="btn btn-info pull-right"
-                                   href="/organization/edit/{{ organization.id }}">
-                                Детально
-                            </a></td>
-                            <td><a target="_self"
-                                   class="btn btn-info pull-right"
-                                   href="/organization/delete/{{ organization.id }}">
-                                Видалити
-                            </a></td>
+                            <th rowspan="2">Назва</th>
+                            <th rowspan="2">Додаткова інформація</th>
+                            <th rowspan="2"></th>
+                            <th rowspan="2"></th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {% for organization in organization_list %}
+                            <tr align="center">
+                                <td>{{ organization.name }}</td>
+                                <td>{{ organization.infoText }}</td>
+                                <td><a target="_self"
+                                       class="btn btn-info pull-right"
+                                       href="/organization/edit/{{ organization.id }}">
+                                    Детально
+                                </a></td>
+                                <td><a target="_self"
+                                       class="btn btn-info pull-right"
+                                       href="/organization/delete/{{ organization.id }}">
+                                    Видалити
+                                </a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        {% else %}
+            <h2 class="text-center">Нічого не знайдено</h2>
+        {% endif %}
 
     </div>
 </main>

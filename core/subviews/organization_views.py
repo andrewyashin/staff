@@ -10,9 +10,13 @@ party_type = 'ORGANIZATION'
 class OrganizationList(TemplateView):
     template_name = 'organization_templates/organizations.html'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, *args, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['organization_list'] = load_organization(organization_category_caption)
+        if self.request.GET.get('searchText') is not None:
+            context['organization_list'] = load_organization_by_search_text(self.request.GET.get('searchText'),
+                                                                            organization_category_caption)
+        else:
+            context['organization_list'] = load_organization(organization_category_caption)
         return context
 
 
