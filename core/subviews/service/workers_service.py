@@ -1,5 +1,7 @@
 from datetime import datetime, date
 
+from django.db import transaction
+
 from core.models import PersonCategory, PersonHasPersonCategory, Person, Party, PartyType, OrganizationCategory, \
     OrganizationHasOrganizationCategory, RelationshipType, Relationship, Organization, PartyContact, ContactType
 
@@ -9,6 +11,17 @@ party_type = 'PERSON'
 
 
 def load_organization(caption):
+    organization_category = OrganizationCategory.objects.get(caption=caption)
+    organization_has_organization_category = OrganizationHasOrganizationCategory.objects.filter(
+        organizationCategory=organization_category)
+    organizations = []
+    for organization_id in organization_has_organization_category:
+        if organization_id.organization.party.state == 'ACT':
+            organizations.append(organization_id.organization)
+    return organizations
+
+
+def load_all_organization(caption):
     organization_category = OrganizationCategory.objects.get(caption=caption)
     organization_has_organization_category = OrganizationHasOrganizationCategory.objects.filter(
         organizationCategory=organization_category)
@@ -54,6 +67,7 @@ def load_workers_per_search_text(search_text):
     return search_text_workers
 
 
+@transaction.atomic
 def save_worker(data):
     party = create_party()
     worker = create_worker(data, party)
@@ -137,6 +151,7 @@ def update_worker(pk, data):
     worker.save()
 
 
+@transaction.atomic
 def delete_worker(pk):
     person = Person.objects.get(id=pk)
     party = person.party
@@ -147,6 +162,7 @@ def delete_worker(pk):
     Relationship.objects.filter(destParty=party).update(endDate=datetime.now())
 
 
+@transaction.atomic
 def delete_relationship(pk):
     relationship = Relationship.objects.get(id=pk)
     relationship.endDate = datetime.now()
@@ -163,6 +179,7 @@ def load_contact_types():
     return ContactType.objects.all()
 
 
+@transaction.atomic
 def create_contact_info(data, person):
     contact_type_id = data.get('contact_types')
     contact_type = ContactType.objects.get(pk=contact_type_id)
@@ -173,6 +190,7 @@ def create_contact_info(data, person):
     contact.save()
 
 
+@transaction.atomic
 def create_contact_type(data):
     contact_type = ContactType()
     contact_type.name = data.get('name')
@@ -180,6 +198,7 @@ def create_contact_type(data):
     contact_type.save()
 
 
+@transaction.atomic
 def delete_contact(contact_id):
     party = PartyContact.objects.get(pk=contact_id).party
     PartyContact.objects.get(pk=contact_id).delete()

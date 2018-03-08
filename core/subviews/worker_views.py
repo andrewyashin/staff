@@ -29,7 +29,7 @@ class EditWorker(TemplateView):
         person = Person.objects.get(id=pk)
         context['person'] = person
         context['organization_list'] = load_organization(organization_category)
-        context['organization_relationship'] = load_person_organizations(load_organization(organization_category),
+        context['organization_relationship'] = load_person_organizations(load_all_organization(organization_category),
                                                                         person)
         context['contacts'] = load_contact_information(person)
         context['contact_types'] = load_contact_types()

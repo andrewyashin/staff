@@ -1,5 +1,7 @@
 from datetime import datetime, date
 
+from django.db import transaction
+
 from core.models import Organization, OrganizationCategory, OrganizationHasOrganizationCategory, Party, PartyType, \
     Relationship, Person
 
@@ -30,6 +32,7 @@ def load_organization_by_search_text(search_text, caption):
     return organizations
 
 
+@transaction.atomic
 def save_organization(data):
     party = create_party()
     organization = create_organization(data, party)
@@ -71,6 +74,7 @@ def create_organization_has_organization_category(organization_category, organiz
     return organization_has_organization_category
 
 
+@transaction.atomic
 def update_organization(pk, data):
     organization = Organization.objects.get(id=pk)
     organization.name = data.get('name')
@@ -78,6 +82,7 @@ def update_organization(pk, data):
     organization.save()
 
 
+@transaction.atomic
 def delete_organization(pk):
     organization = Organization.objects.get(id=pk)
     party = organization.party
